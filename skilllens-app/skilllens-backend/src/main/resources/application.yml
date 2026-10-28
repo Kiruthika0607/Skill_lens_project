@@ -1,0 +1,195 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+
+  application:
+    name: skilllens-backend
+
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/skilllens_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+      idle-timeout: 600000
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+    show-sql: false
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: false
+    validate-on-migrate: true
+    out-of-order: false
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: ${MAX_UPLOAD_SIZE:10MB}
+      max-request-size: ${MAX_REQUEST_SIZE:15MB}
+
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  cache:
+    type: simple
+
+  jackson:
+    default-property-inclusion: NON_NULL
+    serialization:
+      write-dates-as-timestamps: false
+    deserialization:
+      fail-on-unknown-properties: false
+
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    include-message: never
+    include-stacktrace: never
+    include-binding-errors: never
+  compression:
+    enabled: true
+
+# ─── JWT ─────────────────────────────────────────────────────────────────────
+skilllens:
+  jwt:
+    secret: ${JWT_SECRET:CHANGE_THIS_TO_A_LONG_RANDOM_SECRET_KEY_OF_AT_LEAST_64_CHARACTERS_FOR_HS512}
+    access-token-expiry-ms: ${JWT_ACCESS_EXPIRY_MS:900000}        # 15 minutes
+    refresh-token-expiry-ms: ${JWT_REFRESH_EXPIRY_MS:604800000}   # 7 days
+
+  # ─── Google Cloud Storage ──────────────────────────────────────────────────
+  gcs:
+    enabled: ${GCS_ENABLED:false}
+    project-id: ${GCS_PROJECT_ID:}
+    bucket-name: ${GCS_BUCKET_NAME:skilllens-resumes}
+    credentials-path: ${GCS_CREDENTIALS_PATH:}
+    local-fallback-dir: ${LOCAL_STORAGE_DIR:./uploads}
+
+  # ─── Anthropic Claude ─────────────────────────────────────────────────────
+  ai:
+    provider: ${AI_PROVIDER:gemini}
+    anthropic:
+      api-key: ${ANTHROPIC_API_KEY:}
+      model: ${ANTHROPIC_MODEL:claude-3-5-haiku-20241022}
+      max-tokens: 4096
+      timeout-seconds: 60
+      enabled: ${AI_ENABLED:false}
+    gemini:
+      api-key: ${GEMINI_API_KEY:}
+      model: ${GEMINI_MODEL:gemini-2.5-flash}
+      timeout-seconds: 30
+      enabled: ${GEMINI_ENABLED:false}
+
+  # ─── Resume Processing ────────────────────────────────────────────────────
+  resume:
+    allowed-mime-types:
+      - application/pdf
+      - application/vnd.openxmlformats-officedocument.wordprocessingml.document
+      - application/msword
+    max-file-size-bytes: 10485760   # 10 MB
+
+  # ─── CORS ─────────────────────────────────────────────────────────────────
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:3000,http://localhost:5173}
+    max-age: 3600
+
+  # ─── Rate Limiting ────────────────────────────────────────────────────────
+  rate-limit:
+    auth-requests-per-minute: 10
+    api-requests-per-minute: 100
+
+  # ─── Admin Provisioning ───────────────────────────────────────────────────
+  admin:
+    init-email: ${ADMIN_INIT_EMAIL:admin@skilllens.com}
+    init-password: ${ADMIN_INIT_PASSWORD:}
+
+  # ─── Scheduler ────────────────────────────────────────────────────────────
+  scheduler:
+    opportunity-sync-cron: "0 0 */6 * * *"
+    expiry-check-cron: "0 0 1 * * *"
+    link-check-cron: "0 0 3 * * SUN"
+    notification-cron: "0 */15 * * * *"
+    analytics-cron: "0 0 0 * * *"
+    resume-retry-cron: "0 */10 * * * *"
+
+# ─── Springdoc / OpenAPI ─────────────────────────────────────────────────────
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+    tags-sorter: alpha
+  show-actuator: false
+
+# ─── Management / Actuator ───────────────────────────────────────────────────
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized
+
+# ─── Logging ─────────────────────────────────────────────────────────────────
+logging:
+  level:
+    com.skilllens: INFO
+    org.springframework.security: WARN
+    org.flywaydb: INFO
+    org.hibernate.SQL: WARN
+
+---
+# ─── Test Profile ─────────────────────────────────────────────────────────────
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  flyway:
+    locations: classpath:db/migration
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+skilllens:
+  ai:
+    anthropic:
+      enabled: false
+  gcs:
+    enabled: false
+    local-fallback-dir: ./test-uploads
+  jwt:
+    secret: TEST_SECRET_KEY_FOR_UNIT_TESTS_ONLY_NOT_PRODUCTION_64CHARS_MINIMUM
+    access-token-expiry-ms: 60000
+    refresh-token-expiry-ms: 3600000

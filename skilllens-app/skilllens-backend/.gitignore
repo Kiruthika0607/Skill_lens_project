@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+target/
+uploads/
+scratch/
+hs_err_pid*.log
+replay_pid*.log
+TestHash.java
+sample_resume.txt
