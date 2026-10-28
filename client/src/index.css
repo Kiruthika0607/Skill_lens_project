@@ -1,0 +1,526 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================
+   CSS CUSTOM PROPERTIES & DESIGN TOKENS
+   ============================================= */
+:root {
+  --navy-950: #020817;
+  --navy-900: #0F172A;
+  --navy-800: #1E293B;
+  --navy-700: #334155;
+  --indigo-primary: #6366F1;
+  --indigo-light: #818CF8;
+  --emerald-primary: #10B981;
+  --amber-primary: #F59E0B;
+  --glow-indigo: rgba(99, 102, 241, 0.15);
+  --glow-emerald: rgba(16, 185, 129, 0.12);
+}
+
+/* =============================================
+   BASE STYLES
+   ============================================= */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+    font-family: 'Inter', sans-serif;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.04) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.03) 0px, transparent 50%);
+    min-height: 100vh;
+  }
+}
+
+/* =============================================
+   BADGE COMPONENTS
+   ============================================= */
+@layer components {
+  .badge-synthetic {
+    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(251, 191, 36, 0.1));
+    color: #92400E;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    backdrop-filter: blur(4px);
+  }
+
+  .badge-real {
+    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(52, 211, 153, 0.1));
+    color: #065F46;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    backdrop-filter: blur(4px);
+  }
+
+  .badge-ai {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(139, 92, 246, 0.08));
+    color: #4338CA;
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    backdrop-filter: blur(4px);
+  }
+
+  /* =============================================
+     CARD COMPONENTS
+     ============================================= */
+  .institutional-card {
+    @apply bg-white border border-slate-200/80 rounded-2xl shadow-sm p-6 transition-all duration-300;
+    backdrop-filter: blur(4px);
+  }
+  
+  .institutional-card:hover {
+    @apply shadow-lg border-slate-300;
+    transform: translateY(-2px);
+  }
+
+  .glass-card {
+    @apply rounded-2xl border transition-all duration-300;
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(226, 232, 240, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 24px -4px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(255,255,255,0.5) inset;
+  }
+
+  .dark-glass-card {
+    @apply rounded-2xl border transition-all duration-300;
+    background: rgba(15, 23, 42, 0.92);
+    border-color: rgba(51, 65, 85, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(99,102,241,0.1) inset;
+  }
+
+  .metric-card {
+    @apply bg-white rounded-2xl border border-slate-200/80 p-5 transition-all duration-300;
+    box-shadow: 0 2px 16px -4px rgba(15, 23, 42, 0.06);
+  }
+  
+  .metric-card:hover {
+    box-shadow: 0 8px 32px -8px rgba(15, 23, 42, 0.12);
+    transform: translateY(-1px);
+  }
+
+  /* =============================================
+     TABLE COMPONENTS
+     ============================================= */
+  .table-header {
+    @apply bg-slate-50 text-slate-600 font-semibold text-xs uppercase tracking-wider px-4 py-3.5 text-left;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  }
+
+  .table-cell {
+    @apply px-4 py-3.5 text-sm text-slate-700;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+  }
+
+  /* =============================================
+     BUTTON COMPONENTS
+     ============================================= */
+  .btn-primary {
+    @apply px-5 py-2.5 rounded-xl font-semibold text-sm text-white transition-all duration-200 flex items-center gap-2;
+    background: linear-gradient(135deg, #4F46E5, #6366F1);
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+  }
+  
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #4338CA, #4F46E5);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    @apply px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 flex items-center gap-2;
+    background: rgba(99, 102, 241, 0.08);
+    color: #4F46E5;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+  }
+  
+  .btn-secondary:hover {
+    background: rgba(99, 102, 241, 0.14);
+    border-color: rgba(99, 102, 241, 0.35);
+  }
+
+  .btn-dark {
+    @apply px-5 py-2.5 rounded-xl font-semibold text-sm text-white transition-all duration-200 flex items-center gap-2;
+    background: linear-gradient(135deg, #0F172A, #1E293B);
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.3);
+  }
+  
+  .btn-dark:hover {
+    background: linear-gradient(135deg, #1E293B, #334155);
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.4);
+    transform: translateY(-1px);
+  }
+
+  /* =============================================
+     INPUT COMPONENTS
+     ============================================= */
+  .input-field {
+    @apply w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-900 text-sm placeholder-slate-400 transition-all duration-200;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04) inset;
+  }
+  
+  .input-field:focus {
+    @apply outline-none border-indigo-400;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12), 0 1px 3px rgba(0,0,0,0.04) inset;
+  }
+
+  /* =============================================
+     SKILL PILL COMPONENTS
+     ============================================= */
+  .skill-pill {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer select-none;
+  }
+  
+  .skill-pill-matched {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(52, 211, 153, 0.08));
+    color: #047857;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+  
+  .skill-pill-gap {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(252, 165, 165, 0.06));
+    color: #B91C1C;
+    border: 1px solid rgba(239, 68, 68, 0.25);
+  }
+  
+  .skill-pill-neutral {
+    background: rgba(100, 116, 139, 0.08);
+    color: #475569;
+    border: 1px solid rgba(100, 116, 139, 0.2);
+  }
+  
+  .skill-pill-selected {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.18), rgba(139, 92, 246, 0.12));
+    color: #3730A3;
+    border: 1px solid rgba(99, 102, 241, 0.35);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.12);
+  }
+
+  /* =============================================
+     SCORE / PROGRESS COMPONENTS
+     ============================================= */
+  .score-ring {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .progress-bar {
+    @apply h-2 rounded-full overflow-hidden bg-slate-100;
+  }
+  
+  .progress-fill {
+    @apply h-full rounded-full transition-all duration-700 ease-out;
+    background: linear-gradient(90deg, #6366F1, #818CF8);
+  }
+  
+  .progress-fill-emerald {
+    background: linear-gradient(90deg, #10B981, #34D399);
+  }
+  
+  .progress-fill-amber {
+    background: linear-gradient(90deg, #F59E0B, #FCD34D);
+  }
+  
+  .progress-fill-red {
+    background: linear-gradient(90deg, #EF4444, #FC8181);
+  }
+
+  /* =============================================
+     SECTION HEADERS
+     ============================================= */
+  .section-label {
+    @apply text-xs font-bold uppercase tracking-[0.15em] text-indigo-600;
+  }
+  
+  .section-title {
+    @apply text-2xl font-bold text-slate-900 tracking-tight;
+  }
+
+  /* =============================================
+     NAVIGATION LINK ACTIVE STATE
+     ============================================= */
+  .nav-link {
+    @apply text-slate-300 hover:text-white text-sm font-medium transition-all duration-200 relative py-1;
+  }
+  
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #6366F1, #818CF8);
+    transition: width 0.3s ease;
+    border-radius: 2px;
+  }
+  
+  .nav-link:hover::after {
+    width: 100%;
+  }
+  
+  .nav-link-active {
+    @apply text-white;
+  }
+  
+  .nav-link-active::after {
+    width: 100% !important;
+  }
+
+  /* =============================================
+     HERO GRADIENT GLOW
+     ============================================= */
+  .hero-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    opacity: 0.5;
+    animation: pulse-glow 6s ease-in-out infinite alternate;
+  }
+  
+  @keyframes pulse-glow {
+    from { opacity: 0.3; transform: scale(1); }
+    to { opacity: 0.6; transform: scale(1.08); }
+  }
+
+  /* =============================================
+     STAT COUNTER ANIMATION
+     ============================================= */
+  .stat-number {
+    @apply font-black tracking-tight;
+    font-family: 'Outfit', sans-serif;
+    background: linear-gradient(135deg, #0F172A, #334155);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-number-indigo {
+    background: linear-gradient(135deg, #4338CA, #6366F1, #818CF8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-number-emerald {
+    background: linear-gradient(135deg, #047857, #10B981, #34D399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-number-amber {
+    background: linear-gradient(135deg, #92400E, #F59E0B, #FCD34D);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* =============================================
+     FEATURE CARD WITH GRADIENT BORDER
+     ============================================= */
+  .feature-card {
+    @apply relative rounded-2xl p-6 transition-all duration-300;
+    background: white;
+    overflow: hidden;
+  }
+  
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(99,102,241,0.25), rgba(226,232,240,0.5), rgba(16,185,129,0.2));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    transition: background 0.3s;
+  }
+  
+  .feature-card:hover::before {
+    background: linear-gradient(135deg, rgba(99,102,241,0.5), rgba(139,92,246,0.3), rgba(16,185,129,0.4));
+  }
+  
+  .feature-card:hover {
+    box-shadow: 0 20px 48px -12px rgba(99, 102, 241, 0.18);
+    transform: translateY(-3px);
+  }
+
+  /* =============================================
+     LOADING SPINNER
+     ============================================= */
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(99, 102, 241, 0.1);
+    border-top-color: #6366F1;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* =============================================
+     SCROLL REVEAL ANIMATIONS
+     ============================================= */
+  .fade-in-up {
+    animation: fadeInUp 0.6s ease-out both;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .slide-in-right {
+    animation: slideInRight 0.5s ease-out both;
+  }
+  
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* =============================================
+     INTELLIGENCE / EVALUATOR SPECIAL STYLES
+     ============================================= */
+  .evaluator-answer-card {
+    @apply rounded-2xl p-6 border transition-all duration-300;
+    background: linear-gradient(135deg, #FAFBFF, #F5F7FF);
+    border-color: rgba(99, 102, 241, 0.15);
+  }
+  
+  .evaluator-answer-card:hover {
+    border-color: rgba(99, 102, 241, 0.3);
+    box-shadow: 0 8px 32px -8px rgba(99, 102, 241, 0.15);
+  }
+  
+  .provenance-tag {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono font-medium;
+    background: rgba(15, 23, 42, 0.05);
+    color: #475569;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+  }
+
+  /* =============================================
+     DARK NAVBAR GRADIENT
+     ============================================= */
+  .navbar-bg {
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.98) 0%, rgba(15, 23, 42, 0.95) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.3);
+  }
+
+  /* =============================================
+     ONBOARDING STEP STYLES
+     ============================================= */
+  .step-indicator-active {
+    background: linear-gradient(135deg, #4F46E5, #6366F1);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+  }
+  
+  .step-indicator-done {
+    background: linear-gradient(135deg, #047857, #10B981);
+  }
+  
+  .step-indicator-pending {
+    @apply bg-slate-200;
+  }
+
+  /* =============================================
+     HEATMAP STYLES
+     ============================================= */
+  .heatmap-cell {
+    @apply rounded transition-all duration-200 cursor-pointer flex items-center justify-center text-xs font-bold;
+    min-width: 40px;
+    min-height: 36px;
+  }
+
+  /* =============================================
+     GRADIENT TEXT
+     ============================================= */
+  .gradient-text-indigo {
+    background: linear-gradient(135deg, #4338CA, #6366F1, #818CF8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .gradient-text-emerald {
+    background: linear-gradient(135deg, #047857, #10B981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .gradient-text-hero {
+    background: linear-gradient(135deg, #0F172A 0%, #334155 50%, #4F46E5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* =============================================
+     DECORATIVE GRID PATTERN
+     ============================================= */
+  .grid-pattern {
+    background-image: 
+      linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  
+  /* =============================================
+     SCROLLBAR STYLING
+     ============================================= */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.3);
+    border-radius: 3px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 116, 139, 0.5);
+  }
+}
